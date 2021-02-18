@@ -4,8 +4,11 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <!--
+    Generar el ejecutable .jar:
     mvn clean compile assembly:single
-    java -jar target/socket-project-1.0.0-jar-with-dependencies.jar
+
+    Ejecutar:
+    java -jar target/socket-server.jar
     -->
     <groupId>py.com.eik</groupId>
     <artifactId>socket-server</artifactId>
@@ -24,6 +27,12 @@
                     <descriptorRefs>
                         <descriptorRef>jar-with-dependencies</descriptorRef>
                     </descriptorRefs>
+                    <!--
+                        Para generar un .jar con nombre personalizado.
+                        Fuente: https://stackoverflow.com/questions/1334999/is-it-possible-to-rename-a-maven-jar-with-dependencies
+                    -->
+                    <finalName>socket-server</finalName>
+                    <appendAssemblyId>false</appendAssemblyId>
                 </configuration>
             </plugin></plugins>
     </build>
