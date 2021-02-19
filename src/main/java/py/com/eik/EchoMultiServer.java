@@ -7,6 +7,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.net.BindException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -15,13 +16,21 @@ public class EchoMultiServer {
     private static Logger LOG = LogManager.getLogger(EchoMultiServer.class);
     private ServerSocket serverSocket;
 
+    public void start(String port) {
+        int portNumber = Integer.parseInt(port);
+        start(portNumber);
+    }
+
     public void start(int port) {
-        LOG.info("Iniciando servidor");
+        LOG.info("Iniciando servidor en puerto " + port);
+
         try {
             serverSocket = new ServerSocket(port);
+
             while (true)
                 new EchoClientHandler(serverSocket.accept()).start();
-
+        } catch (BindException e) {
+            System.out.println("Puerto ya se utilizaaa!!");
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
@@ -77,7 +86,8 @@ public class EchoMultiServer {
 
     public static void main(String[] args) {
         EchoMultiServer server = new EchoMultiServer();
-        server.start(5555);
+        String serverPort = PropertiesLoader.getServerPort();
+        server.start(serverPort);
     }
 
 }
