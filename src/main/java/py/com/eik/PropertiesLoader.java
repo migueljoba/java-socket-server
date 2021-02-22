@@ -6,7 +6,7 @@ import java.util.Properties;
 
 
 /**
- * Clase para cargar propiedades del servidor definidas en el archivo main.properties.
+ * Clase para cargar propiedades del servidor definidas en el archivo serverConfig.properties.
  * <p>
  * Es obligatorio que el archivo se encuentre en el mismo directorio desde el que se ejecutará
  * el comando para levantar el servidor.
@@ -39,7 +39,7 @@ public class PropertiesLoader {
         FileInputStream file;
 
         // ubicación del archivo de propiedades, reelativo al directorio desde el que se ejecuta el jar
-        String filePath = "./main.properties";
+        String filePath = "./serverConfig.properties";
 
         try {
             file = new FileInputStream(filePath);

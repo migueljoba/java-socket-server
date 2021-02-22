@@ -1,5 +1,6 @@
 package py.com.eik;
 
+import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -13,7 +14,10 @@ import java.net.Socket;
 
 public class EchoMultiServer {
 
-    private static Logger LOG = LogManager.getLogger(EchoMultiServer.class);
+    final static Level LOG_DATA = Level.forName("LOG_DATA", 550);
+
+    private static Logger logger = LogManager.getLogger(EchoMultiServer.class);
+
     private ServerSocket serverSocket;
 
     public void start(String port) {
@@ -22,7 +26,7 @@ public class EchoMultiServer {
     }
 
     public void start(int port) {
-        LOG.info("Iniciando servidor en puerto " + port);
+        logger.info("Iniciando servidor en puerto " + port);
 
         try {
             serverSocket = new ServerSocket(port);
@@ -69,22 +73,25 @@ public class EchoMultiServer {
                         break;
                     }
                     out.println(inputLine);
-                    LOG.info(inputLine);
+                    logger.info(inputLine);
                 }
 
                 in.close();
                 out.close();
                 clientSocket.close();
-                LOG.info("Cerrando clientSocket");
+                logger.info("Cerrando clientSocket");
 
             } catch (IOException e) {
                 e.printStackTrace();
-                LOG.debug(e.getMessage());
+                logger.debug(e.getMessage());
             }
         }
     }
 
     public static void main(String[] args) {
+
+        logger.log(LOG_DATA, "Esto es LOG_DATA LOG_DATA LOG_DATA LOG_DATA");
+
         EchoMultiServer server = new EchoMultiServer();
         String serverPort = PropertiesLoader.getServerPort();
         server.start(serverPort);
